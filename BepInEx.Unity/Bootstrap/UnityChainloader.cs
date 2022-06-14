@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -31,6 +31,9 @@ public class UnityChainloader : BaseChainloader<BaseUnityPlugin>
      "Include unity log messages in log file output.");
 
     private string _consoleTitle;
+
+    // TODO: Remove once proper instance handling exists
+    public static UnityChainloader Instance { get; set; }
 
     /// <summary>
     ///     The GameObject that all plugins are attached to as components.
@@ -77,6 +80,8 @@ public class UnityChainloader : BaseChainloader<BaseUnityPlugin>
     {
         try
         {
+            Instance = this;
+
             Logger.Log(LogLevel.Debug, "Entering chainloader initialize");
 
             UnityTomlTypeConverters.AddUnityEngineConverters();
